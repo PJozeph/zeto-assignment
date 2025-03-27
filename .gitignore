@@ -8,3 +8,12 @@ zeto-services/mvnw
 zeto-services/.mvn/wrapper/maven-wrapper.properties
 zeto-services/.idea
 zeto-services/HELP.md
+
+zeto-client/dist
+zeto-client/tmp
+zeto-client/out-tsc
+zeto-client/bazel-out
+zeto-client/.vscode
+zeto-client/.editorconfig
+zeto-client/angular.json
+zeto-client/node_modules
