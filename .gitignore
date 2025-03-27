@@ -1,0 +1,10 @@
+zeto-services/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+zeto-services/.gitattributes
+zeto-services/mvnw.cmd
+zeto-services/mvnw
+zeto-services/.mvn/wrapper/maven-wrapper.properties
+zeto-services/.idea
+zeto-services/HELP.md

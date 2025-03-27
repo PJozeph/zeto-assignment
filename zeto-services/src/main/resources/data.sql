@@ -1,0 +1,22 @@
+INSERT INTO RECORDINGS (title, duration, status, sedation, activation)
+VALUES
+('MRI Brain Scan', 1800, 'SCHEDULED', NULL, NULL),
+('CT Chest Scan', 2400, 'SCHEDULED', NULL, NULL),
+('X-Ray Arm', 300, 'SCHEDULED', NULL, NULL),
+('Ultrasound Abdomen', 1200, 'SCHEDULED', NULL, NULL),
+('EEG Monitoring', 3600, 'RECORDED', NULL, NULL),
+('Heart Rate Test', 600, 'RECORDED', NULL, NULL),
+('Stress Test', 1800, 'RECORDED', NULL, NULL),
+('Endoscopy', 2700, 'RECORDED', NULL, NULL),
+('Sleep Study', 28800, 'RECORDED', NULL, NULL),
+('Lung Function Test', 900, 'RECORDED', NULL, NULL),
+('MRI Full Body', 5400, 'REPORTED', 'Midazolam', 'High Activity'),
+('CT Angiography', 4200, 'REPORTED', 'Propofol', 'Normal'),
+('PET Scan', 7200, 'REPORTED', 'Ketamine', 'Increased Metabolism'),
+('Echo Cardiogram', 1800, 'REPORTED', 'None', 'Stable'),
+('EEG with Stimulation', 3600, 'REPORTED', 'Thiopental', 'Seizure Activity Detected'),
+('Blood Flow Analysis', 1200, 'REPORTED', 'None', 'Mild Hypoperfusion'),
+('Neurophysiology Exam', 5400, 'REPORTED', 'Fentanyl', 'Elevated Responses'),
+('Cerebral Blood Flow Test', 6000, 'REPORTED', 'Dexmedetomidine', 'Reduced Perfusion'),
+('Gastrointestinal Motility Test', 3600, 'REPORTED', 'Lorazepam', 'Normal Movement'),
+('Cardiac Stress MRI', 4500, 'REPORTED', 'Etomidate', 'Normal Function');

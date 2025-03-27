@@ -1,0 +1,8 @@
+CREATE TABLE "RECORDINGS" (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    duration INT NOT NULL,
+    status ENUM('SCHEDULED', 'RECORDED', 'REPORTED') NOT NULL,
+    sedation VARCHAR(255),
+    activation VARCHAR(255)
+);
