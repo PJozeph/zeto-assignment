@@ -17,3 +17,5 @@ zeto-client/.vscode
 zeto-client/.editorconfig
 zeto-client/angular.json
 zeto-client/node_modules
+zeto0-client/.tsbuildinfo
+zeto-client/.angular
