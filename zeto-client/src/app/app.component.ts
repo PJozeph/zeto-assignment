@@ -1,37 +1,27 @@
-import { AfterViewChecked, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SocketService } from './servcies/socket.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.less'
+  imports: [RouterOutlet, CommonModule],
+  template: '<router-outlet></router-outlet>',
 })
-export class AppComponent implements OnInit, AfterViewChecked {
-  
+export class AppComponent implements OnInit {
+
   title = 'zeto-client';
 
+  private websocketService: SocketService = inject(SocketService);
+  public dataList$ = this.websocketService.getRecordSubject$();
+  public dataSingle$ = this.websocketService.getRecordSingleSubject$();
 
-  websocketService : SocketService = inject(SocketService);
-  
   ngOnInit(): void {
-    //this.websocketService.connect((message: any) => {});
-    
-  }
-
-  foo(){
-    //this.websocketService.watch();
-  }
-  
-  onButtonClick() {
-    this.websocketService.sendMessage({ text: 'Hello, world!', from: 'me' });
-    console.log('Button clicked');
-  }
-
-  ngAfterViewChecked(): void {
-    this.websocketService.watch();
+    setTimeout
+      (() => {
+        this.websocketService.watchTopic();
+      }, 1000);
   }
 
 }

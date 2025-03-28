@@ -30,5 +30,15 @@ public class Recording {
 
     private String activation;
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
 }

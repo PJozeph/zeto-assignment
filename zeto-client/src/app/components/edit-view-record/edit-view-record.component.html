@@ -1,0 +1,19 @@
+<div *ngIf="dataSingle$ | async as data" class="container">
+    <h1>Record Details</h1>
+    {{data["body"] | json}}
+    <form [formGroup]="recordFormGroup" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="title">Title</label>
+            <input id="title" formControlName="title" />
+        </div>
+        <div>
+            <label for="body">Body</label>
+            <input id="body" formControlName="body" />
+        </div>
+        <button type="submit" [disabled]="!recordFormGroup.valid">Save</button>
+
+    </form>
+    <button [disabled]="true">Edit</button>
+    <button>Delete</button>
+
+</div>
