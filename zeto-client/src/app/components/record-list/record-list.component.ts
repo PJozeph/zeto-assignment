@@ -17,7 +17,8 @@ import { SocketService } from '../../servcies/socket.service';
   styleUrl: './record-list.component.less'
 })
 export class RecordListComponent {
+
   private websocketService: SocketService = inject(SocketService);
   public dataList$ = this.websocketService.getRecordSubject$();
-
+  
 }

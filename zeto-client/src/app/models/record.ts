@@ -1,11 +1,11 @@
 export enum Status {
-    ACTIVE = "ACTIVE",
-    INACTIVE = "INACTIVE",
-    PENDING = "PENDING"
+    SCHEDULED = "SCHEDULED",
+    RECORDED = "RECORDED",
+    REPORTED = "REPORTED"
   }
   
   export interface Recording {
-    id?: number; 
+    id: number; 
     title: string;
     duration: number;
     status: Status;

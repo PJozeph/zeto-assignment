@@ -1,6 +1,5 @@
 package home.zeto.zeto.services.dto;
 
-
 public class GetSingleDTO {
 
     private Long id;

@@ -1,5 +1,6 @@
 package home.zeto.zeto.services.service;
 
+import home.zeto.zeto.services.dto.Response;
 import home.zeto.zeto.services.entity.Recording;
 import home.zeto.zeto.services.entity.Status;
 import home.zeto.zeto.services.dto.GetSingleDTO;
@@ -18,12 +19,19 @@ public class RecordingService {
     @Autowired
     RecordingRepository recordingRepository;
 
-    public ResponseEntity<?>getSingle(GetSingleDTO getSingleDTO)  {
+    public ResponseEntity<Response> getSingle(GetSingleDTO getSingleDTO) {
         Optional<Recording> recording = this.recordingRepository.findById(getSingleDTO.getId());
         if (recording.isPresent()) {
-            return ResponseEntity.ok(this.recordingRepository.findById(getSingleDTO.getId()));
+            Response<Recording> response = Response.<Recording>builder()
+                    .content(recording.get())
+                    .build();
+            return ResponseEntity.ok(response);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recording not found");
+        Response<String> errorResponse = Response.<String>builder()
+                .error("Recording not found")
+                .errorCode(HttpStatus.NOT_FOUND.value())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
     public ResponseEntity<?> update(Recording recording) {

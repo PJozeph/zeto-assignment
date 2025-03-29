@@ -1,5 +1,6 @@
 package home.zeto.zeto.services.controller;
 
+import home.zeto.zeto.services.dto.Response;
 import home.zeto.zeto.services.entity.Recording;
 import home.zeto.zeto.services.dto.GetSingleDTO;
 import home.zeto.zeto.services.service.RecordingService;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 
-
 @Controller
 public class RecordSocketController {
 
@@ -16,7 +16,7 @@ public class RecordSocketController {
     RecordingService recordingService;
 
     @MessageMapping("/single")
-    public ResponseEntity<?> getSingle(GetSingleDTO getSingleDTO) {
+    public ResponseEntity<Response> getSingle(GetSingleDTO getSingleDTO) {
         return this.recordingService.getSingle(getSingleDTO);
     }
 

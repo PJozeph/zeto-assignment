@@ -38,41 +38,41 @@ export class SocketService {
   }
 
   update(message: Recording): void {
-    console.log('Sending message................', JSON.stringify(message) );
     this.stompClient?.publish({ destination: '/app/update', body: JSON.stringify(message) });
   }
 
   getRecords(): void {
-    console.log('Getting records................');
-    if(this.stompClient.connected) {
+    if (this.stompClient.connected) {
       this.stompClient?.publish({ destination: '/app/records' });
     }
   }
 
-  watchTopic(): void {
-    if(this.stompClient.connected) {
+  subscribeToRecordChannel(): void {
+    if (this.stompClient.connected) {
       this.stompClient?.subscribe('/topic/records', (greeting: IMessage) => {
-        const data: Recording [] = JSON.parse(greeting.body);
+        const data: Recording[] = JSON.parse(greeting.body);
         this.recordListSubject$.next(data);
-    });
+      });
     }
   }
 
   watchTopicSingle(): void {
-    if(this.stompClient.connected) {
-      this.stompClient?.subscribe('/topic/single', (greeting: IMessage) => {
-        const data: Recording  = JSON.parse(greeting.body);
-        this.recordSingleSubject$.next(data);
-    });
+    // TODO create response DTO on backend side
+    if (this.stompClient.connected) {
+      this.stompClient?.subscribe('/topic/single', (message: IMessage) => {
+        const data = JSON.parse(message.body);
+        const recording: Recording = data.body?.content;
+        this.recordSingleSubject$.next(recording);
+      });
     }
   }
 
   watchTopicupdate(): void {
-    if(this.stompClient.connected) {
+    if (this.stompClient.connected) {
       this.stompClient?.subscribe('/topic/update', (greeting: IMessage) => {
-        const data: Recording  = JSON.parse(greeting.body);
-        console.log('update data', data);        
-    });
+        const data: Recording = JSON.parse(greeting.body);
+        console.log('update data', data);
+      });
     }
   }
 
