@@ -9,7 +9,7 @@ export enum Status {
     title: string;
     duration: number;
     status: Status;
-    sedation?: string;
-    activation?: string;
+    sedation: string;
+    activation: string;
   }
   

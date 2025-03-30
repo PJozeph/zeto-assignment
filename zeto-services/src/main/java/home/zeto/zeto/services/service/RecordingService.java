@@ -34,23 +34,33 @@ public class RecordingService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-    public ResponseEntity<?> update(Recording recording) {
+    public ResponseEntity<Response> update(Recording recording) {
         Optional<Recording> record = this.recordingRepository.findById(recording.getId());
         if (record.isPresent()) {
             if (Status.RECORDED == record.get().getStatus()) {
-                return ResponseEntity.ok(this.recordingRepository.save(recording));
+                Recording saved = this.recordingRepository.save(recording);
+                Response<Recording> response = Response.<Recording>builder()
+                        .content(saved)
+                        .build();
+                return ResponseEntity.ok(response);
+            } else {
+                Response<String> errorResponse = Response.<String>builder()
+                        .error("Recording can not be updated")
+                        .errorCode(HttpStatus.BAD_REQUEST.value())
+                        .build();
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Recording can not be updated");
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recording not found");
+        Response<String> errorResponse = Response.<String>builder()
+                .error("Recording not found")
+                .errorCode(HttpStatus.NOT_FOUND.value())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-    public List<Recording>findAll() {
+    public List<Recording> findAll() {
         return this.recordingRepository.findAll();
     }
 
-    public Recording save(Recording data) {
-        return this.recordingRepository.save(data);
-    }
 
 }

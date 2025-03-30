@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { SocketService } from '../../servcies/socket.service';
 import { filter, take } from 'rxjs';
@@ -24,23 +24,23 @@ export class EditViewRecordComponent implements OnInit, OnDestroy {
 
   Status = Status;
   recordedOptions = [
-    { value: Status.RECORDED, label: 'RECORDED' },
-    { value: Status.REPORTED, label: 'REPORTED' },
-    { value: Status.SCHEDULED, label: 'SCHEDULED' },
+    { value: Status.RECORDED, label: 'Recorded' },
+    { value: Status.REPORTED, label: 'Reported' },
+    { value: Status.SCHEDULED, label: 'Scheduled' },
   ];
-
 
   recordFormGroup: FormGroup = this.formBuilder.nonNullable.group({
     id: [''],
-    title: [''],
-    duration: [''],
-    status: [''],
-    sedation: [''],
-    activation: [''],
+    title: ['', Validators.required],
+    duration: ['', Validators.required],
+    status: ['', Validators.required],
+    sedation: ['', Validators.required],
+    activation: ['', Validators.required],
   });
 
   onSubmit(): void {
     this.websocketService.update(this.recordFormGroup.value)
+    this.websocketService.getRecordList();
     this.router.navigate(['']);
   }
 
@@ -76,9 +76,9 @@ export class EditViewRecordComponent implements OnInit, OnDestroy {
 
   private subscribeToRecordChannelandQueryParams(): void {
     setTimeout(() => {
-      this.websocketService.watchTopicSingle();
+      this.websocketService.subscribeToSingleRecord();
       this.activatedRoute.params.pipe(take(1), takeUntilDestroyed(this.destoryRef)).subscribe((params) => {
-        this.websocketService.sendMessage({ id: params['id'] });
+        this.websocketService.getSingleRecord(params['id']);
       });
     }, 1000);
   }

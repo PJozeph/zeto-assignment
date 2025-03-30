@@ -21,7 +21,7 @@ public class RecordSocketController {
     }
 
     @MessageMapping("/update")
-    public ResponseEntity<?> update(Recording recording) {
+    public ResponseEntity<Response> update(Recording recording) {
         return recordingService.update(recording);
     }
 

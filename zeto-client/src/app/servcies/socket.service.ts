@@ -9,7 +9,7 @@ import { Recording } from '../models/record';
 })
 export class SocketService {
   stompClient: Client | null = null;
-  private readonly serverUrl = 'http://localhost:8080/chat';
+  private readonly serverUrl = 'http://localhost:8080/zeto-records';
   private recordListSubject$ = new BehaviorSubject<Recording[]>([]);
   private recordSingleSubject$ = new BehaviorSubject<Recording>(null);
 
@@ -32,22 +32,21 @@ export class SocketService {
   }
 
 
-  sendMessage(message: any): void {
-    console.log('Sending message................', message);
-    this.stompClient?.publish({ destination: '/app/single', body: JSON.stringify(message) });
+  getSingleRecord(id: string): void {
+    this.stompClient?.publish({ destination: '/app/single', body: JSON.stringify({ id }) });
   }
 
-  update(message: Recording): void {
-    this.stompClient?.publish({ destination: '/app/update', body: JSON.stringify(message) });
+  update(record: Recording): void {
+    this.stompClient?.publish({ destination: '/app/update', body: JSON.stringify(record) });
   }
 
-  getRecords(): void {
+  getRecordList(): void {
     if (this.stompClient.connected) {
       this.stompClient?.publish({ destination: '/app/records' });
     }
   }
 
-  subscribeToRecordChannel(): void {
+  subscribeToRecordList(): void {
     if (this.stompClient.connected) {
       this.stompClient?.subscribe('/topic/records', (greeting: IMessage) => {
         const data: Recording[] = JSON.parse(greeting.body);
@@ -56,28 +55,23 @@ export class SocketService {
     }
   }
 
-  watchTopicSingle(): void {
-    // TODO create response DTO on backend side
+  subscribeToSingleRecord(): void {
     if (this.stompClient.connected) {
-      this.stompClient?.subscribe('/topic/single', (message: IMessage) => {
-        const data = JSON.parse(message.body);
+      this.stompClient?.subscribe('/topic/single', (record: IMessage) => {
+        const data = JSON.parse(record.body);
         const recording: Recording = data.body?.content;
         this.recordSingleSubject$.next(recording);
       });
     }
   }
 
-  watchTopicupdate(): void {
-    if (this.stompClient.connected) {
-      this.stompClient?.subscribe('/topic/update', (greeting: IMessage) => {
-        const data: Recording = JSON.parse(greeting.body);
-        console.log('update data', data);
-      });
-    }
-  }
 
   disconnect(): void {
-    console.log('Disconnecting from WebSocket...');
+    if (this.stompClient) {
+      this.stompClient.deactivate();
+    } else {
+      console.error('Stomp client is not initialized.');
+    }
   }
 
 }

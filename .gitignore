@@ -3,9 +3,6 @@ zeto-services/target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 zeto-services/.gitattributes
-zeto-services/mvnw.cmd
-zeto-services/mvnw
-zeto-services/.mvn/wrapper/maven-wrapper.properties
 zeto-services/.idea
 zeto-services/HELP.md
 
@@ -15,7 +12,6 @@ zeto-client/out-tsc
 zeto-client/bazel-out
 zeto-client/.vscode
 zeto-client/.editorconfig
-zeto-client/angular.json
 zeto-client/node_modules
 zeto0-client/.tsbuildinfo
 zeto-client/.angular

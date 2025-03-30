@@ -1,44 +1,51 @@
-<div *ngIf="dataSingle$ | async as record" class="container">
-    <h1>Record Details</h1>
-    <form [formGroup]="recordFormGroup" (ngSubmit)="onSubmit()">
-        <div class="row">
-            <label>Title</label>
-            <input formControlName="title" />
-        </div>
-        <div class="row">
-            <label>Duration</label>
-            <input formControlName="duration" />
-        </div>
-
-        @if(record.status === Status.RECORDED) {
-        <div class="row">
-            <label>Status</label>
-            <select formControlName="status">
-                <option *ngFor="let option of recordedOptions" [value]="option.value">{{ option.value }}</option>
-            </select>
-        </div>
-        } @else {
-        <div class="row">
-            <label>Status</label>
-            <input formControlName="status" />
-        </div>
-        }
-        
-        <div class="row">
-            <label>Sedation</label>
-            <input formControlName="sedation" />
-        </div>
-
-        <div class="row">
-            <label>Activation</label>
-            <input formControlName="activation" />
-        </div>
-
-        <div class="btn-row">
-            <Button (click)="onNavigateRecordsClick()">Back</Button>
-            <Button type="submit" [disabled]="record.status !== Status.RECORDED">Save</Button>
-        </div>
-
-    </form>
-
+<div *ngIf="!(dataSingle$ | async); else content" class="container">
+    <p>Loading...</p>
 </div>
+
+<ng-template #content>
+    <div *ngIf="dataSingle$ | async as record" class="container">
+        <h1>Record Details</h1>
+        <form [formGroup]="recordFormGroup" (ngSubmit)="onSubmit()">
+            
+            <div class="row">
+                <label>Title</label>
+                <input formControlName="title" />
+            </div>
+            <div class="row">
+                <label>Duration</label>
+                <input formControlName="duration" />
+            </div>
+
+            @if(record.status === Status.RECORDED) {
+            <div class="row">
+                <label>Status</label>
+                <select formControlName="status">
+                    <option *ngFor="let option of recordedOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
+            </div>
+            } @else {
+            <div class="row">
+                <label>Status</label>
+                <input formControlName="status" />
+            </div>
+            }
+
+            <div class="row">
+                <label>Sedation</label>
+                <input formControlName="sedation" />
+            </div>
+
+            <div class="row">
+                <label>Activation</label>
+                <input formControlName="activation" />
+            </div>
+
+            <div class="btn-row">
+                <Button (click)="onNavigateRecordsClick()">Back</Button>
+                <Button type="submit"
+                    [disabled]="recordFormGroup.invalid || record.status !== Status.RECORDED">Save</Button>
+            </div>
+
+        </form>
+    </div>
+</ng-template>

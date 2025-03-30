@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SocketService } from './servcies/socket.service';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   imports: [RouterOutlet, CommonModule],
   template: '<router-outlet></router-outlet>',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   title = 'zeto-client';
 
@@ -20,8 +20,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     setTimeout
       (() => {
-        this.websocketService.subscribeToRecordChannel();
+        this.websocketService.subscribeToRecordList();
       }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    this.websocketService.disconnect();
   }
 
 }
