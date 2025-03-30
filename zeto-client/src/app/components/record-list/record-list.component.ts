@@ -7,12 +7,12 @@ import { SocketService } from '../../servcies/socket.service';
   selector: 'app-record-list',
   imports: [CommonModule, RecordItemComponent],
   template: `
-  <section class="container" *ngIf="dataList$ | async as data">
+  <section class="container" *ngIf="dataList$ | async as recorList">
     <h1>Record List</h1>
-    <div *ngIf="data.length === 0">
+    <div *ngIf="recorList.length === 0">
         <p>Loading....</p>
     </div>
-    <app-record-item *ngFor="let record of data" [record]="record"></app-record-item>
+    <app-record-item *ngFor="let record of recorList" [record]="record"></app-record-item>
 </section>`,
   styleUrl: './record-list.component.less'
 })
