@@ -14,8 +14,6 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'zeto-client';
 
   private websocketService: SocketService = inject(SocketService);
-  public dataList$ = this.websocketService.getRecordSubject$();
-  public dataSingle$ = this.websocketService.getRecordSingleSubject$();
 
   ngOnInit(): void {
     setTimeout
